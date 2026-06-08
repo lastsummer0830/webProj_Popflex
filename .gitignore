@@ -94,5 +94,15 @@ src/main/resources/config.properties
 # =========================
 # Claude Code internal files
 # =========================
+.claude/
+.omo/
 .sisyphus/
 .playwright-mcp/
+
+# =========================
+# JVM crash / temp files
+# =========================
+hs_err_pid*
+replay_pid*
+*.tmp
+*.bak
