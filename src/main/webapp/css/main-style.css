@@ -1,0 +1,114 @@
+@charset "UTF-8";
+
+:root {
+  --bg: #FFF4DE;
+  --box: #FFB020;
+  --point: #FF5C3B;
+  --ink: #151515;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Noto Sans KR", Arial, sans-serif;
+  letter-spacing: 0;
+  overflow: hidden;
+}
+
+.home {
+  width: min(620px, calc(100% - 40px));
+  padding: 42px;
+  border-radius: 14px;
+  background: rgba(255, 176, 32, 0.7);
+  text-align: center;
+}
+
+.brand-mark {
+  width: 118px;
+  height: 118px;
+  margin: 0 auto 14px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #fff;
+}
+
+.logo {
+  width: 86px;
+  height: 82px;
+  object-fit: contain;
+  display: block;
+}
+
+h1 {
+  margin: 0 0 12px;
+  font-family: "Chewy", cursive;
+  font-size: 42px;
+  font-weight: 400;
+  line-height: 1;
+}
+
+p {
+  margin: 0 0 28px;
+  color: #4a3320;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.button {
+  min-width: 128px;
+  height: 42px;
+  padding: 0 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: #fff;
+  color: #141414;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 900;
+  transition: background 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+.button:hover {
+  background: var(--point);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+@media (max-width: 560px) {
+  body {
+    align-items: flex-start;
+    padding-top: 72px;
+    overflow: auto;
+  }
+
+  .home {
+    padding: 32px 24px;
+  }
+
+  h1 {
+    font-size: 36px;
+  }
+
+  .button {
+    width: 100%;
+  }
+}

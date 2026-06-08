@@ -1,0 +1,523 @@
+@charset "UTF-8";
+
+/* 
+   FRIEND PAGE — friend.css
+   공통 CSS(common.css)를 import 후 사용
+ */
+
+/* ── 메인 레이아웃 ──────────────────────────────────── */
+.friend-main {
+    padding: 48px 80px 0;
+}
+
+/* ── 페이지 타이틀 ──────────────────────────────────── */
+.friend-title-area {
+    margin-bottom: 32px;
+}
+
+.friend-title {
+    font-size: 28px;
+    font-weight: 900;
+    margin: 0 0 6px;
+    color: var(--text);
+}
+
+.friend-desc {
+    font-size: 14px;
+    color: var(--muted);
+    margin: 0;
+}
+
+/* ── 섹션 라벨 ──────────────────────────────────────── */
+.section-label {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0 0 10px;
+}
+
+/* =============================================
+   친구 검색 섹션
+============================================= */
+.friend-search-section {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-bottom: 36px;
+}
+
+/* ── 검색 입력 줄 ───────────────────────────────────── */
+.search-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.search-input {
+    flex: 1;
+    height: 42px;
+    padding: 0 16px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    font-size: 14px;
+    background: var(--page-bg);
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.search-input:focus {
+    border-color: var(--orange);
+}
+
+.btn-search {
+    height: 42px;
+    padding: 0 22px;
+    background: var(--text);
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+}
+
+.btn-search:hover {
+    background: #333;
+}
+
+.btn-friend-add {
+    height: 42px;
+    padding: 0 22px;
+    background: var(--orange);
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+}
+
+.btn-friend-add:hover {
+    background: var(--orange-dark);
+}
+
+/* ── 검색 결과 카드 ─────────────────────────────────── */
+.search-result-row {
+    margin-top: 14px;
+    display: flex;
+    align-items: center;
+}
+
+.search-result-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--page-bg);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 12px 18px;
+    width: 100%;
+}
+
+.search-result-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+}
+
+.result-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.result-userid {
+    font-size: 13px;
+    color: var(--muted);
+}
+
+.result-status {
+    font-size: 13px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    white-space: nowrap;
+}
+
+.result-status.possible {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.result-status.already {
+    background: #f5f5f5;
+    color: var(--muted);
+}
+
+/* ── 검색 메시지 ────────────────────────────────────── */
+.search-msg {
+    font-size: 13px;
+    margin: 8px 0 0;
+    min-height: 18px;
+}
+
+.search-msg.error {
+    color: #d32f2f;
+}
+
+.search-msg.success {
+    color: #2e7d32;
+}
+
+/* ── 작은 아바타 (검색 결과용) ─────────────────────── */
+.avatar-sm {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--line);
+    flex-shrink: 0;
+}
+
+/* =============================================
+   내 친구 목록 섹션
+============================================= */
+.friend-list-section {
+    margin-bottom: 0;
+}
+
+.friend-list-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.friend-list-header .section-label {
+    margin: 0;
+}
+
+.friend-count {
+    font-size: 14px;
+    color: var(--muted);
+}
+
+.friend-count strong {
+    color: var(--text);
+}
+
+/* ── 친구 카드 그리드 ───────────────────────────────── */
+.friend-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+/* ── 친구 카드 ──────────────────────────────────────── */
+.friend-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 16px 18px;
+    transition: box-shadow 0.2s;
+}
+
+.friend-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* ── 아바타 (친구 카드용) ───────────────────────────── */
+.avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--line);
+    flex-shrink: 0;
+}
+
+/* ── 친구 정보 ──────────────────────────────────────── */
+.friend-info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    flex: 1;
+    min-width: 0;
+}
+
+.friend-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.friend-userid {
+    font-size: 13px;
+    color: var(--muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.friend-since {
+    font-size: 12px;
+    color: var(--line);
+}
+
+/* ── 삭제 버튼 ──────────────────────────────────────── */
+.btn-delete {
+    height: 34px;
+    padding: 0 14px;
+    background: var(--text);
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background 0.2s;
+    white-space: nowrap;
+}
+
+.btn-delete:hover {
+    background: #d32f2f;
+}
+
+/* ── 친구 없음 메시지 ───────────────────────────────── */
+.no-friend-msg {
+    text-align: center;
+    color: var(--muted);
+    font-size: 14px;
+    padding: 60px 0;
+    border: 1px dashed var(--line);
+    border-radius: 12px;
+    background: var(--white);
+    line-height: 1.7;
+}
+
+/* =============================================
+   반응형 (필요시)
+============================================= */
+@media (max-width: 768px) {
+    .friend-main {
+        padding: 32px 24px 0;
+    }
+
+    .friend-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* =============================================
+   userProfile 전용 스타일
+============================================= */
+
+/* ── 뒤로가기 버튼 ──────────────────────────────────── */
+.profile-back-row {
+    margin-bottom: 24px;
+}
+
+.btn-back {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 6px 0;
+    transition: color 0.2s;
+}
+
+.btn-back:hover {
+    color: var(--orange-dark);
+}
+
+/* ── 프로필 섹션 ─────────────────────────────────────── */
+.profile-section {
+    margin-bottom: 36px;
+}
+
+.profile-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 24px 28px;
+}
+
+/* ── 프로필 아바타 ───────────────────────────────────── */
+.profile-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: var(--line);
+    flex-shrink: 0;
+}
+
+/* ── 프로필 정보 ─────────────────────────────────────── */
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+}
+
+.profile-name {
+    font-size: 20px;
+    font-weight: 900;
+    color: var(--text);
+    margin: 0;
+}
+
+.profile-userid {
+    font-size: 14px;
+    color: var(--muted);
+    margin: 0;
+}
+
+/* =============================================
+   프로필 리뷰 목록
+============================================= */
+.profile-review-section {
+    margin-bottom: 0;
+}
+
+.profile-review-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+/* ── 리뷰 카드 ───────────────────────────────────────── */
+.profile-review-card {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 18px 22px;
+    transition: box-shadow 0.2s;
+}
+
+.profile-review-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* ── 리뷰 상단 행 ────────────────────────────────────── */
+.review-top-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.review-movie-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    flex: 1;
+}
+
+/* ── 터짐 / 안터짐 배지 ────────────────────────────────── */
+.review-badge {
+    font-size: 12px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+}
+
+.review-badge.fresh {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.review-badge.rotten {
+    background: #fce4ec;
+    color: #c62828;
+}
+
+/* ── 비공개 배지 ─────────────────────────────────────── */
+.review-private-badge {
+    font-size: 12px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: #f5f5f5;
+    color: var(--muted);
+    white-space: nowrap;
+}
+
+/* ── 리뷰 내용 ───────────────────────────────────────── */
+.review-content {
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.6;
+    margin: 0 0 10px;
+}
+
+/* ── 리뷰 날짜 ───────────────────────────────────────── */
+.review-date {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+/* ── userProfile 반응형 ───────────────────────────── */
+@media (max-width: 768px) {
+    .profile-card {
+        flex-wrap: wrap;
+    }
+
+    .profile-review-grid {
+        gap: 10px;
+    }
+}
+
+/* ── 친구 리뷰 보기 버튼 ───────────────────────────── */
+.friend-card-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.btn-review-view {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 34px;
+    padding: 0 14px;
+    background: var(--orange);
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s;
+}
+
+.btn-review-view:hover {
+    background: var(--orange-dark);
+}
+
+@media (max-width: 768px) {
+    .friend-card-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}

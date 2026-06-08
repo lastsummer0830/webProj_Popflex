@@ -1,0 +1,98 @@
+# =========================
+# API key / local config
+# =========================
+config.properties
+**/config.properties
+src/main/resources/config.properties
+**/src/main/resources/config.properties
+
+# 샘플 설정 파일은 올려야 함
+!config.example.properties
+!**/config.example.properties
+
+# =========================
+# Java build output
+# =========================
+bin/
+build/
+target/
+out/
+*.class
+
+# =========================
+# Eclipse workspace / local settings
+# =========================
+.metadata/
+.classpath
+.project
+.settings/
+Servers/
+RemoteSystemsTempFiles/
+.recommenders/
+*.launch
+
+# =========================
+# Tomcat local/server files
+# =========================
+apache-tomcat-*/
+tomcat.*/
+work/
+temp/
+logs/
+
+# =========================
+# IntelliJ
+# =========================
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# =========================
+# VS Code
+# =========================
+.vscode/
+
+# =========================
+# OS files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# Logs
+# =========================
+*.log
+
+# =========================
+# Local DB / test files
+# =========================
+*.db
+*.sqlite
+*.sqlite3
+
+# =========================
+# JAR files - Maven dependencies are declared in pom.xml
+# =========================
+*.jar
+**/WEB-INF/lib/*.jar
+
+# =========================
+# Generated WAR
+# =========================
+*.war
+*.ear
+
+# =========================
+# Local docs
+# =========================
+docs/
+
+# local config files
+src/main/resources/config.properties
+
+# =========================
+# Claude Code internal files
+# =========================
+.sisyphus/
+.playwright-mcp/
