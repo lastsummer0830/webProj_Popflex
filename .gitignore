@@ -84,9 +84,11 @@ Thumbs.db
 *.ear
 
 # =========================
-# Local docs
+# Local docs — README 산출물(스키마·이미지)만 추적하고 나머지는 제외
 # =========================
-docs/
+docs/*
+!docs/images/
+!docs/schema.sql
 
 # local config files
 src/main/resources/config.properties
