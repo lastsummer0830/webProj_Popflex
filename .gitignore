@@ -98,6 +98,7 @@ src/main/resources/config.properties
 # =========================
 .claude/
 .omo/
+.run/
 .sisyphus/
 .playwright-mcp/
 
