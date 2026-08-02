@@ -94,7 +94,7 @@ docs/*
 src/main/resources/config.properties
 
 # =========================
-# Claude Code internal files
+# AI 코딩 도구 내부 파일
 # =========================
 .claude/
 .omo/
