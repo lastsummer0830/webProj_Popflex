@@ -44,7 +44,7 @@ public class DiaryDAO {
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT d.diary_id, d.movie_id, d.reservation_id, d.review_id, ");
 		sql.append("       d.watch_date, d.popcorn_rating, d.created_at, ");
-		sql.append("       m.title AS movie_title, m.poster_url, CAST(NULL AS VARCHAR2(100)) AS genre, m.runtime, ");
+		sql.append("       m.title AS movie_title, m.poster_url, m.genre, m.runtime, ");
 		sql.append("       rv.content AS review_content, rv.fresh_yn AS review_fresh_yn, rv.public_yn AS review_public_yn, ");
 		sql.append("       th.theater_name, sc.screen_name ");
 		sql.append("  FROM DIARY_ENTRY d ");
@@ -110,7 +110,7 @@ public class DiaryDAO {
 
 		String sql = "SELECT d.diary_id, d.movie_id, d.reservation_id, d.review_id, "
 				+ "       d.watch_date, d.popcorn_rating, d.created_at, "
-				+ "       m.title AS movie_title, m.poster_url, CAST(NULL AS VARCHAR2(100)) AS genre, m.runtime, "
+				+ "       m.title AS movie_title, m.poster_url, m.genre, m.runtime, "
 				+ "       th.theater_name, sc.screen_name "
 				+ "  FROM DIARY_ENTRY d "
 				+ "  JOIN MOVIE m ON d.movie_id = m.movie_id "
@@ -199,7 +199,7 @@ public class DiaryDAO {
 		DiaryDTO dto = null;
 
 		String sql = "SELECT d.diary_id, d.member_id, d.movie_id, d.reservation_id, d.review_id, "
-				+ "       d.watch_date, d.popcorn_rating, d.created_at, "
+				+ "       d.watch_date, d.star_rating, d.popcorn_rating, d.created_at, "
 				+ "       m.title AS movie_title, m.poster_url, m.runtime, " + "       th.theater_name, sc.screen_name "
 				+ "  FROM DIARY_ENTRY d " + "  JOIN MOVIE m ON d.movie_id = m.movie_id "
 				+ "  LEFT JOIN RESERVATION r  ON d.reservation_id = r.reservation_id "
@@ -220,6 +220,7 @@ public class DiaryDAO {
 					dto.setReservationId(getNullableInt(rs, "reservation_id"));
 					dto.setReviewId(getNullableInt(rs, "review_id"));
 					dto.setWatchDate(rs.getDate("watch_date"));
+					dto.setStarRating(rs.getDouble("star_rating"));
 					dto.setPopcornRating(rs.getDouble("popcorn_rating"));
 					dto.setCreatedAt(rs.getTimestamp("created_at"));
 					dto.setMovieTitle(rs.getString("movie_title"));
@@ -700,10 +701,10 @@ public class DiaryDAO {
 	// 같은 감독 영화 최대 편수 (감독 팬 뱃지)
 	public int getMaxDirectorCount(int memberId) throws Exception {
 		String sql = "SELECT MAX(cnt) FROM ("
-				+ "SELECT m.director_nm, COUNT(*) AS cnt FROM DIARY_ENTRY d "
+				+ "SELECT m.director_name, COUNT(*) AS cnt FROM DIARY_ENTRY d "
 				+ "JOIN MOVIE m ON d.movie_id = m.movie_id "
-				+ "WHERE d.member_id = ? AND m.director_nm IS NOT NULL AND m.director_nm <> '' "
-				+ "GROUP BY m.director_nm) t";
+				+ "WHERE d.member_id = ? AND m.director_name IS NOT NULL "
+				+ "GROUP BY m.director_name) t";
 		try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setInt(1, memberId);
 			try (ResultSet rs = ps.executeQuery()) {

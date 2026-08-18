@@ -1526,12 +1526,20 @@ html.skip-diary-cover #cover-overlay { display: none; }
 .archive-ticket-list::-webkit-scrollbar { width: 4px; }
 .archive-ticket-list::-webkit-scrollbar-track { background: transparent; }
 .archive-ticket-list::-webkit-scrollbar-thumb { background: rgba(176,120,56,0.18); border-radius: 999px; }
+.archive-ticket-list-wrap {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+}
 .archive-ticket-list.archive-scroll {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 10px;
-  max-height: 342px;
-  min-height: 0;
+  /* 고정 높이 대신 남는 공간을 채운다. 카드가 넘치면 이 안에서만 스크롤 */
+  flex: 1 1 auto;
+  max-height: none;
+  min-height: 180px;
   padding: 7px 5px 12px;
   overflow-y: auto;
   flex-direction: initial;
@@ -2079,6 +2087,110 @@ body,
 .fresh-btn {
   font-weight: 800;
 }
+
+/* ══════════════════════════════════════════════════
+   보정 — 테마 오버라이드가 덮어쓴 값 되돌리기 + 목록 가독성
+══════════════════════════════════════════════════ */
+
+/* ① Select Movie 목록: 썸네일·글씨·행 높이 확대 */
+.ticket-select-list { gap: 8px; }
+.ticket-select-item {
+  padding: 10px 12px;
+  gap: 12px;
+  border-radius: 10px;
+}
+.tsi-poster { width: 46px; height: 66px; border-radius: 5px; font-size: 18px; }
+.tsi-title { font-size: 13px; }
+.tsi-date  { font-size: 11px; margin-top: 4px; }
+.ticket-select-label { font-size: 13px; }
+
+/* ② 주황 헤더 바 위의 글씨는 흰색 */
+.note-header-title,
+.archive-content-title,
+.week-title,
+.week-day-lbl,
+.week-day-num { color: #fff; }
+.note-header-sub,
+.archive-content-sub,
+.archive-review-kicker { color: rgba(255,255,255,0.82); }
+
+/* ③ 저장 버튼: hover 때만 보이던 것을 항상 채운 버튼으로 */
+.note-save-btn,
+.btn-save {
+  background: var(--diary-box);
+  color: #fff;
+  border: none;
+}
+.note-save-btn:hover,
+.btn-save:hover { background: var(--diary-point); color: #fff; }
+
+
+/* 보정 — 카드가 남는 높이만큼 늘어나(또는 잘려) 보이던 문제 */
+.archive-ticket-list.archive-scroll {
+  align-content: start;
+  align-items: start;
+  grid-auto-rows: max-content;
+}
+
+/* 보정 — 캘린더 포토카드 확대 */
+.photocard-stack { width: 300px; height: 300px; }
+.photocard,
+.photocard-ph { width: 196px; height: 278px; }
+
+
+/* 보정 — 감상 작성칸을 한 화면에 글+버튼이 들어가는 크기로 */
+.note-textarea { min-height: 330px; font-size: 14px; line-height: 1.85; padding: 16px 18px 34px; }
+.note-textarea-wrap { margin: 12px 22px 0; }
+.note-save-btn { margin: 14px 22px 18px; padding: 14px; font-size: 15px; }
+
+/* 보정 — 캘린더 왼쪽 페이지 가독성 + 포토카드 위치 */
+.monthly-lbl { font-size: 14px; }
+.monthly-val { font-size: 17px; }
+.monthly-title { font-size: 12.5px; }
+.sidebar-section .year-badge,
+.sidebar a { font-size: 15px; }
+.poster-date-lbl { font-size: 14px; font-weight: 800; }
+.photocard-stack { margin-top: 46px; }
+
+/* 보정 — 오늘(빨강)과 선택한 날(주황)을 구분 */
+.cal-cell.selected {
+  border-color: var(--diary-box) !important;
+  border-width: 2px !important;
+  background: #fff4d0 !important;
+}
+.cal-cell.today { border-color: var(--diary-point) !important; }
+
+/* 보정3 (0819) — 책이 화면 밖으로 나가던 것 + 작성칸이 남는 공간을 안 채우던 것 */
+
+/* ① 책 바닥이 항상 뷰포트보다 56px 아래로 내려가 끝선이 잘렸다.
+      book-cover = page-wrap + 상단 112 + 하단 패딩 62 → 100vh-118 이면 bottom = 100vh+56.
+      아래 여백 24px 남기고 화면 안에 들어오게 한다. */
+.page-wrap {
+  min-height: calc(100vh - 198px) !important;
+  height: calc(100vh - 198px) !important;
+}
+
+/* ② 작성칸을 남은 높이만큼 늘려 저장 버튼이 책 바닥 살짝 위에 오게 한다.
+      form#writeForm 이 display:block 이라 여기서 늘어남이 끊겼다. */
+#writeForm {
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+}
+.note-textarea-wrap {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+.note-textarea {
+  flex: 1 1 auto !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  resize: none;
+}
+
 </style>
 </head>
 <body>
@@ -2324,7 +2436,7 @@ body,
 			  </div>
 			</div>
 		  </div>
-		  <div>
+		  <div class="archive-ticket-list-wrap">
 			<div class="archive-ticket-list archive-scroll" id="archiveScroll">
               <c:forEach var="d" items="${diaryList}">
                 <c:if test="${not empty d.reviewId}">
@@ -3305,7 +3417,7 @@ function selectWriteEntry(el) {
   if (ta) { ta.value = ''; const cc = document.getElementById('writeCharCount'); if(cc) cc.textContent='0/5000'; }
 }
 
-let _curPopcorn = 0;
+var _curPopcorn = 0;   // 선언 전 접근(TDZ) 오류가 나던 자리
 function renderPopcorn(val) {
   _curPopcorn = val;
   const row = document.getElementById('popcornRow');

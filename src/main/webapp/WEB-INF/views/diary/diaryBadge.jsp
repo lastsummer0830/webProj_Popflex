@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -60,8 +62,9 @@ body {
   gap: 8px;
   position: relative;
   z-index: 10;
-  min-height: calc(100vh - 118px);
-  height: calc(100vh - 118px);
+  /* 보정3 (0819) — 상단 112 + 하단 패딩 62가 더 붙어 책 바닥이 뷰포트 밖으로 나가던 것 */
+  min-height: calc(100vh - 198px);
+  height: calc(100vh - 198px);
   overflow: visible;
 }
 
@@ -535,6 +538,104 @@ body {
   font-weight: 800;
 }
 
+
+/* 보정 — 주황 헤더 바 위의 글씨는 흰색 */
+.badge-header-title,
+.badge-header-title span { color: #fff; }
+
+
+/* 보정 — 사이드바 뱃지 현황 */
+.side-sum {
+  margin-top: 18px;
+  background: #fff8ed;
+  border: 1px solid #f0e0b0;
+  border-radius: 12px;
+  padding: 16px 16px;
+}
+.side-sum-title {
+  font-size: 11.5px; font-weight: 800; letter-spacing: 0.1em;
+  color: #c07a10; text-transform: uppercase; margin-bottom: 8px;
+}
+.side-sum-row {
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 13px; color: #8a7a68;
+  padding: 8px 0; border-bottom: 1px dashed #f0e0b0;
+}
+.side-sum-row:last-child { border-bottom: none; }
+.side-sum-val { font-weight: 800; color: #1a1816; }
+.side-prog-wrap {
+  height: 10px; background: #f0e6d2; border-radius: 999px;
+  overflow: hidden; margin-top: 8px;
+}
+.side-prog { height: 100%; background: linear-gradient(to right, #e8a838, #f0c040); border-radius: 999px; }
+.side-prog-lbl { font-size: 10.5px; font-weight: 800; color: #c07a10; text-align: right; margin-top: 5px; }
+.side-badge-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
+.side-badge-grid img { width: 100%; max-width: 54px; aspect-ratio: 1 / 1; object-fit: contain; justify-self: center; }
+
+
+/* 보정2 — 카드·글자 확대 */
+.badge-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 14px; }
+.badge-card { padding: 20px 14px 18px; }
+.badge-icon { width: 50px; height: 50px; margin-bottom: 10px; }
+.badge-name { font-size: 16px; margin-bottom: 5px; }
+.badge-desc { font-size: 12.5px; margin-bottom: 8px; }
+.badge-status-done { font-size: 13px; }
+.badge-date { font-size: 13px; }
+.section-title { font-size: 16px; margin-bottom: 14px; }
+.badge-header-title { font-size: 27px; }
+.badge-earned-count { font-size: 14.5px; padding: 7px 16px; }
+.side-sum-row { font-size: 14px; }
+.side-sum-title { font-size: 12.5px; }
+.side-prog-lbl { font-size: 12.5px; }
+.sidebar a, .sidebar .stat-link { font-size: 15px; }
+
+
+.side-goal { margin-bottom: 14px; }
+.side-goal:last-child { margin-bottom: 0; }
+.side-goal-top { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.side-goal-top img { width: 26px; height: 26px; object-fit: contain; }
+.side-goal-name { font-size: 13px; font-weight: 700; color: #5a534c; flex: 1; min-width: 0;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.side-goal-num { font-size: 12.5px; font-weight: 800; color: #c07a10; }
+.side-goal .side-prog-wrap { margin-top: 0; height: 8px; }
+.badge-grid { grid-template-columns: repeat(auto-fill, minmax(196px, 1fr)); }
+
+/* ══ 보정4 (0819) — 왼쪽 밀도·글자 / 오른쪽은 획득+잠김을 한 화면에 ══ */
+
+/* ① 사이드바 글자 확대 */
+.side-sum-title { font-size: 14.5px !important; }
+.side-sum-row   { font-size: 15.5px !important; }
+.side-prog-lbl  { font-size: 13.5px !important; }
+.side-goal-name { font-size: 14.5px !important; }
+.side-goal-num  { font-size: 14px !important; }
+.side-sum       { padding: 16px 18px !important; }
+.side-badge-grid img { max-width: 60px !important; }
+
+/* 최근 달성(날짜) 목록 */
+.side-recent-row {
+  display: flex; align-items: center; gap: 9px;
+  padding: 7px 0; border-bottom: 1px dashed #efe7db;
+}
+.side-recent-row:last-child { border-bottom: none; }
+.side-recent-row img { width: 30px; height: 30px; object-fit: contain; flex-shrink: 0; }
+.side-recent-name { flex: 1; min-width: 0; font-size: 14px; font-weight: 700; color: #5a534c;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.side-recent-date { font-size: 13px; font-weight: 800; color: #e8a838; }
+
+/* ② 오른쪽: 24개를 스크롤 없이 한 화면에 — 4열 콤팩트 카드 */
+.badge-body { gap: 14px !important; padding: 16px 20px 18px !important; overflow: hidden !important; }
+.badge-grid { grid-template-columns: repeat(4, 1fr) !important; gap: 9px !important; }
+.badge-card { padding: 11px 8px 10px !important; border-radius: 13px !important; }
+.badge-icon { width: 32px !important; height: 32px !important; margin-bottom: 5px !important; }
+.badge-name { font-size: 12.5px !important; margin-bottom: 2px !important; }
+.badge-desc { display: none !important; }          /* 요건 설명은 카드에서 뺀다 — 이름으로 읽힌다 */
+.badge-status-done { font-size: 10.5px !important; }
+.badge-date { font-size: 11px !important; margin-top: 1px !important; }
+.badge-remain { font-size: 10.5px !important; margin-top: 2px !important; }
+.badge-progress-bar { margin: 6px 0 3px !important; }
+.badge-check, .badge-lock { top: 7px !important; right: 8px !important; font-size: 11px !important; }
+.section-title { font-size: 14px !important; }
+
 </style>
 </head>
 <body>
@@ -558,6 +659,65 @@ body {
       <hr class="sidebar-hr">
       <a class="stat-link" href="${pageContext.request.contextPath}/diary/badge.do"
          style="background:#fff3dc; border: 1px solid #f0c84a;">🏅 나의 뱃지</a>
+
+      <c:set var="badgeTotal" value="${fn:length(badgeList)}"/>
+      <div class="side-sum">
+        <div class="side-sum-title">🏅 뱃지 현황</div>
+        <div class="side-sum-row"><span>획득</span><span class="side-sum-val">${earnedCount} / ${badgeTotal}개</span></div>
+        <div class="side-sum-row"><span>남은 뱃지</span><span class="side-sum-val">${badgeTotal - earnedCount}개</span></div>
+        <div class="side-prog-wrap">
+          <div class="side-prog" style="width:${badgeTotal > 0 ? earnedCount * 100 / badgeTotal : 0}%"></div>
+        </div>
+        <div class="side-prog-lbl">달성률 <fmt:formatNumber value="${badgeTotal > 0 ? earnedCount * 100 / badgeTotal : 0}" maxFractionDigits="0"/>%</div>
+      </div>
+
+      <div class="side-sum">
+        <div class="side-sum-title">다음 목표</div>
+        <c:set var="goalShown" value="0"/>
+        <c:forEach var="b" items="${badgeList}">
+          <c:if test="${!b.earned and b.progress > 0 and goalShown < 5}">
+            <div class="side-goal">
+              <div class="side-goal-top">
+                <img src="${pageContext.request.contextPath}/img/${b.icon}" alt="">
+                <span class="side-goal-name">${b.name}</span>
+                <span class="side-goal-num">${b.progress}/${b.target}</span>
+              </div>
+              <div class="side-prog-wrap">
+                <div class="side-prog" style="width:${b.target > 0 ? b.progress * 100 / b.target : 0}%"></div>
+              </div>
+            </div>
+            <c:set var="goalShown" value="${goalShown + 1}"/>
+          </c:if>
+        </c:forEach>
+      </div>
+
+      <c:set var="dateShown" value="0"/>
+      <div class="side-sum">
+        <div class="side-sum-title">최근 달성</div>
+        <c:forEach var="b" items="${badgeList}">
+          <c:if test="${b.earned and not empty b.earnedDate and dateShown < 3}">
+            <div class="side-recent-row">
+              <img src="${pageContext.request.contextPath}/img/${b.icon}" alt="">
+              <span class="side-recent-name">${b.name}</span>
+              <span class="side-recent-date">${b.earnedDate}</span>
+            </div>
+            <c:set var="dateShown" value="${dateShown + 1}"/>
+          </c:if>
+        </c:forEach>
+      </div>
+
+      <div class="side-sum">
+        <div class="side-sum-title">최근 획득</div>
+        <div class="side-badge-grid">
+          <c:set var="shown" value="0"/>
+          <c:forEach var="b" items="${badgeList}">
+            <c:if test="${b.earned and shown < 6}">
+              <img src="${pageContext.request.contextPath}/img/${b.icon}" alt="${b.name}" title="${b.name}">
+              <c:set var="shown" value="${shown + 1}"/>
+            </c:if>
+          </c:forEach>
+        </div>
+      </div>
     </aside>
 
     <!-- 스프링 -->
@@ -582,7 +742,7 @@ body {
           <div class="badge-header-title">
             🥇 배지 <span>${earnedCount}</span>개 보유자!
           </div>
-          <div class="badge-earned-count">${earnedCount} / 12개 달성</div>
+          <div class="badge-earned-count">${earnedCount} / ${fn:length(badgeList)}개 달성</div>
         </div>
 
         <!-- 콘텐츠 -->
@@ -611,7 +771,7 @@ body {
                         <div class="badge-name">${b.name}</div>
                         <div class="badge-desc">${b.desc}</div>
                         <div class="badge-status-done">달성 완료</div>
-                        <c:if test="${not empty b.earnedDate}">
+                        <c:if test="${not empty b.earnedDate and b.earnedDate ne '달성'}"><%-- 날짜를 못 구한 뱃지는 서비스가 "달성"을 넣는다 → '달성 완료'와 겹치므로 표시하지 않음 --%>
                           <div class="badge-date">${b.earnedDate}</div>
                         </c:if>
                       </div>

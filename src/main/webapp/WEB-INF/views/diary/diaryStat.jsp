@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
@@ -62,8 +63,9 @@ body {
   gap: 8px;
   position: relative;
   z-index: 10;
-  min-height: calc(100vh - 118px);
-  height: calc(100vh - 118px);
+  /* 보정3 (0819) — 상단 112 + 하단 패딩 62가 더 붙어 책 바닥이 뷰포트 밖으로 나가던 것 */
+  min-height: calc(100vh - 198px);
+  height: calc(100vh - 198px);
   overflow: visible;
 }
 
@@ -500,6 +502,113 @@ body {
   font-weight: 800;
 }
 
+
+/* 보정 — 주황 헤더 바 위의 글씨는 흰색 */
+.stat-header-title { color: #fff; }
+
+
+/* 보정 — 사이드바 요약 박스 */
+.side-sum {
+  margin-top: 18px;
+  background: #fff8ed;
+  border: 1px solid #f0e0b0;
+  border-radius: 12px;
+  padding: 16px 16px;
+}
+.side-sum-title {
+  font-size: 11.5px; font-weight: 800; letter-spacing: 0.1em;
+  color: #c07a10; text-transform: uppercase; margin-bottom: 8px;
+}
+.side-sum-row {
+  display: flex; justify-content: space-between; align-items: center; gap: 8px;
+  font-size: 13px; color: #8a7a68;
+  padding: 8px 0; border-bottom: 1px dashed #f0e0b0;
+}
+.side-sum-row:last-child { border-bottom: none; }
+.side-sum-val { font-weight: 800; color: #1a1816; text-align: right; }
+.side-tag-cloud { display: flex; flex-wrap: wrap; gap: 6px; }
+.side-tag {
+  font-size: 12.5px; font-weight: 700; color: #c07a10;
+  background: #fff; border: 1px solid #f0d79a; border-radius: 999px;
+  padding: 4px 9px;
+}
+.side-tag b { color: #e8a838; margin-left: 4px; }
+
+/* 보정 — 차트가 남는 세로 공간을 채운다 */
+.chart-row { flex: 1 1 auto; min-height: 320px; }
+.chart-box { display: flex; flex-direction: column; min-height: 0; }
+.chart-canvas-wrap { position: relative; flex: 1 1 auto; min-height: 220px; }
+.chart-canvas-wrap canvas { position: absolute; inset: 0; width: 100% !important; height: 100% !important; max-height: none !important; }
+.tag-freq-list { flex: 1 1 auto; justify-content: space-evenly; }
+.stat-card { padding: 20px 12px; }
+
+
+.side-months { display: flex; align-items: flex-end; gap: 5px; height: 132px; margin-top: 4px; }
+.side-month { flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; }
+.side-month-bar { width: 100%; min-height: 2px; border-radius: 3px 3px 0 0; background: linear-gradient(to top, #e8a838, #f0c040); }
+.side-month span { font-size: 8px; color: #b09070; margin-top: 3px; font-weight: 700; }
+
+
+/* 보정 — 가독성 확대 */
+.stat-card { padding: 24px 14px; }
+.stat-card .icon { font-size: 30px; }
+.stat-card .val { font-size: 34px; }
+.stat-card .label { font-size: 13px; margin-top: 4px; }
+.chart-title { font-size: 16px; margin-bottom: 14px; }
+.tag-freq-name { width: 92px; font-size: 13px; }
+.tag-freq-bar-wrap { height: 18px; border-radius: 6px; }
+.tag-freq-cnt { width: 30px; font-size: 13px; font-weight: 800; }
+.chart-row { grid-template-columns: 1.15fr 1fr; min-height: 360px; }
+
+/* 도넛 + 히트맵 행 */
+.chart-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; flex: 0 0 auto; }
+.chart-row2 .chart-box { min-height: 300px; }
+.donut-wrap { position: relative; flex: 1 1 auto; min-height: 240px; }
+.donut-wrap canvas { position: absolute; inset: 0; width: 100% !important; height: 100% !important; max-height: none !important; }
+.heat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; flex: 1 1 auto; }
+.heat-cell {
+  border-radius: 10px; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 2px;
+  border: 1px solid #efe6d6; min-height: 56px;
+}
+.heat-mon { font-size: 11px; font-weight: 700; color: #8a7a68; }
+.heat-cnt { font-size: 17px; font-weight: 900; color: #1a1816; }
+.heat-0 { background: #f7f4ee; }
+.heat-1 { background: #fdf0d2; }
+.heat-2 { background: #f8d98d; }
+.heat-4 { background: #e8a838; }
+.heat-3 { background: #f0bd5c; }
+.heat-4 .heat-cnt, .heat-3 .heat-cnt { color: #4a3418; }
+.heat-legend { display: flex; align-items: center; gap: 6px; margin-top: 12px; font-size: 11px; color: #a89880; }
+.heat-legend i { width: 20px; height: 12px; border-radius: 3px; border: 1px solid #efe6d6; display: inline-block; }
+
+
+/* 보정2 — 가독성 확대 */
+.stat-card .icon { font-size: 34px; }
+.stat-card .val { font-size: 40px; }
+.stat-card .label { font-size: 14.5px; }
+.chart-title { font-size: 18px; margin-bottom: 16px; }
+.tag-freq-name { width: 104px; font-size: 15px; }
+.tag-freq-bar-wrap { height: 22px; }
+.tag-freq-cnt { width: 34px; font-size: 15px; }
+.chart-row { min-height: 330px; }
+.heat-cell { min-height: 62px; }
+.heat-mon { font-size: 13px; }
+.heat-cnt { font-size: 22px; }
+.heat-legend { font-size: 12px; }
+.side-sum-row { font-size: 14px; }
+.side-sum-title { font-size: 12.5px; }
+.side-tag { font-size: 13px; padding: 5px 11px; }
+.sidebar a, .sidebar .stat-link { font-size: 15px; }
+
+/* ══ 보정4 (0819) — 왼쪽 페이지 글자 확대 + 밀도 ══ */
+.side-sum-title { font-size: 14.5px !important; }
+.side-sum-row   { font-size: 15.5px !important; }
+.side-tag       { font-size: 14.5px !important; padding: 6px 12px !important; }
+.side-sum       { padding: 16px 18px !important; }
+.side-month span { font-size: 11.5px !important; }
+.side-months { height: 178px !important; }   /* 막대 차트 키워 왼쪽 페이지를 채운다 */
+
 </style>
 </head>
 <body>
@@ -523,6 +632,54 @@ body {
          style="background:#fff3dc; border: 1px solid #f0c84a;">📊 연간 통계</a>
       <hr class="sidebar-hr">
       <a class="stat-link" href="${pageContext.request.contextPath}/diary/badge.do">🏅 나의 뱃지</a>
+
+      <div class="side-sum">
+        <div class="side-sum-title">📊 ${stat.year} 요약</div>
+        <div class="side-sum-row"><span>총 관람</span><span class="side-sum-val">${stat.totalCount}편</span></div>
+        <div class="side-sum-row"><span>평균 팝콘</span><span class="side-sum-val"><fmt:formatNumber value="${stat.avgPopcornRating}" minFractionDigits="1" maxFractionDigits="1"/> / 5</span></div>
+        <div class="side-sum-row"><span>최다 극장</span><span class="side-sum-val">${empty stat.topTheater ? '-' : stat.topTheater}</span></div>
+        <div class="side-sum-row"><span>감정 태그</span><span class="side-sum-val">${fn:length(stat.tagFreqList)}종</span></div>
+      </div>
+
+      <c:set var="maxMon" value="0"/>
+      <c:forEach var="m" items="${stat.monthlyCount}">
+        <c:if test="${m > maxMon}"><c:set var="maxMon" value="${m}"/></c:if>
+      </c:forEach>
+      <div class="side-sum">
+        <div class="side-sum-title">📅 월별 관람</div>
+        <div class="side-months">
+          <c:forEach var="m" items="${stat.monthlyCount}" varStatus="ms">
+            <div class="side-month" title="${ms.index + 1}월 ${m}편">
+              <div class="side-month-bar" style="height:${maxMon > 0 ? m * 100 / maxMon : 0}%"></div>
+              <span>${ms.index + 1}</span>
+            </div>
+          </c:forEach>
+        </div>
+      </div>
+
+      <c:set var="peakMon" value="0"/>
+      <c:set var="activeMon" value="0"/>
+      <c:forEach var="m" items="${stat.monthlyCount}" varStatus="rs">
+        <c:if test="${m == maxMon and peakMon == 0}"><c:set var="peakMon" value="${rs.index + 1}"/></c:if>
+        <c:if test="${m > 0}"><c:set var="activeMon" value="${activeMon + 1}"/></c:if>
+      </c:forEach>
+      <div class="side-sum">
+        <div class="side-sum-title">🎞 관람 리듬</div>
+        <div class="side-sum-row"><span>가장 많이 본 달</span><span class="side-sum-val">${peakMon}월 · ${maxMon}편</span></div>
+        <div class="side-sum-row"><span>기록한 달</span><span class="side-sum-val">${activeMon} / 12개월</span></div>
+        <div class="side-sum-row"><span>월 평균</span><span class="side-sum-val"><fmt:formatNumber value="${activeMon > 0 ? stat.totalCount / activeMon : 0}" maxFractionDigits="1"/>편</span></div>
+      </div>
+
+      <c:if test="${not empty stat.tagFreqList}">
+        <div class="side-sum">
+          <div class="side-sum-title">😊 이 해의 감정</div>
+          <div class="side-tag-cloud">
+            <c:forEach var="t" items="${stat.tagFreqList}" end="14">
+              <span class="side-tag">#${t.key}<b>${t.value}</b></span>
+            </c:forEach>
+          </div>
+        </div>
+      </c:if>
     </aside>
 
     <!-- ── 스프링 ── -->
@@ -594,7 +751,7 @@ body {
             <!-- 월별 바 차트 -->
             <div class="chart-box">
               <div class="chart-title">📅 월별 관람 편수</div>
-              <canvas id="monthChart" height="180"></canvas>
+              <div class="chart-canvas-wrap"><canvas id="monthChart"></canvas></div>
             </div>
 
             <!-- 감정 태그 빈도 -->
@@ -620,6 +777,35 @@ body {
                   <div class="no-data">태그 기록이 없어요!</div>
                 </c:otherwise>
               </c:choose>
+            </div>
+          </div>
+
+          <!-- 감정 분포 도넛 + 월별 히트맵 -->
+          <div class="chart-row2">
+            <div class="chart-box">
+              <div class="chart-title">🍩 감정 분포</div>
+              <c:choose>
+                <c:when test="${not empty stat.tagFreqList}">
+                  <div class="donut-wrap"><canvas id="tagDonut"></canvas></div>
+                </c:when>
+                <c:otherwise><div class="no-data">태그 기록이 없어요!</div></c:otherwise>
+              </c:choose>
+            </div>
+
+            <div class="chart-box">
+              <div class="chart-title">🗓 월별 히트맵</div>
+              <div class="heat-grid">
+                <c:forEach var="m" items="${stat.monthlyCount}" varStatus="hs">
+                  <div class="heat-cell ${m == 0 ? 'heat-0' : (m >= maxMon ? 'heat-4' : (m * 3 >= maxMon * 2 ? 'heat-3' : (m * 3 >= maxMon ? 'heat-2' : 'heat-1')))}"
+                       title="${hs.index + 1}월 ${m}편">
+                    <span class="heat-mon">${hs.index + 1}월</span>
+                    <span class="heat-cnt">${m}</span>
+                  </div>
+                </c:forEach>
+              </div>
+              <div class="heat-legend">
+                <span>적음</span><i class="heat-0"></i><i class="heat-1"></i><i class="heat-2"></i><i class="heat-3"></i><i class="heat-4"></i><span>많음</span>
+              </div>
             </div>
           </div>
 
@@ -669,10 +855,28 @@ new Chart(ctx, {
   },
   options: {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: { legend: { display: false } },
     scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
   }
 });
+
+const donutEl = document.getElementById('tagDonut');
+if (donutEl) {
+  const tagLabels = [<c:forEach var="t" items="${stat.tagFreqList}" end="4" varStatus="ts">'${t.key}'${!ts.last ? ',' : ''}</c:forEach>];
+  const tagValues = [<c:forEach var="t" items="${stat.tagFreqList}" end="4" varStatus="ts">${t.value}${!ts.last ? ',' : ''}</c:forEach>];
+  let rest = 0;
+  <c:forEach var="t" items="${stat.tagFreqList}" varStatus="ts"><c:if test="${ts.index > 4}">rest += ${t.value};</c:if></c:forEach>
+  if (rest > 0) { tagLabels.push('기타'); tagValues.push(rest); }
+  new Chart(donutEl.getContext('2d'), {
+    type: 'doughnut',
+    data: { labels: tagLabels, datasets: [{ data: tagValues,
+      backgroundColor: ['#e8a838','#f0c040','#f5d98a','#c98a3e','#b0783a','#e8ddc8'],
+      borderColor: '#fff', borderWidth: 3 }] },
+    options: { responsive: true, maintainAspectRatio: false, cutout: '58%',
+      plugins: { legend: { position: 'right', labels: { boxWidth: 14, padding: 12, font: { size: 15, weight: '700' } } } } }
+  });
+}
 
 function updateScrollHint(){
   const content = document.querySelector('.nb-content');
